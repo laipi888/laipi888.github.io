@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="content">
+    <h2>记账小簿</h2>
+
+    <div class="container">
+      <h4>你的资金平衡</h4>
+      <h1>$<span id="balance">0</span></h1>
+
+      <div class="inc-exp-container">
+        <div>
+          <h4>收入</h4>
+          <p id="money-plus" class="money plus">$0</p>
+        </div>
+        <div>
+          <h4>支出</h4>
+          <p id="money-minus" class="money minus">$0</p>
+        </div>
+      </div>
+
+      <h3>收入&支出记录</h3>
+      <ul id="list" class="list"></ul>
+
+      <h3>收支条目添加</h3>
+
+      <div class="form-control">
+        <label for="text">明细</label>
+        <input type="text" id="text" placeholder="输入明细..." />
+      </div>
+      <div class="form-control">
+        <label for="amount">金额
+          <br />
+          (负数 - 支出, 正数 - 收入)</label>
+        <input type="text" id="amount" placeholder="输入金额..." />
+      </div>
+      <button class="addTransition" id="btn" type="button">添加</button>
+
+
+      <p id="error" class="alert">请输入正确的信息!</p>
+      <p id="success" class="alert">信息添加成功!</p>
+
+    </div>
+  </div>
+
+  <script src="./index.js"></script>
+  <script>
+
+    // 1. 根据缓存显示收入支出记录
+    // 创建records对象
+    var records = new Record();
+    // 获取历史记录，并添加对应的li
+    if(records.getRecords != []) {
+      for(var i = 0; i < records.getRecords().length;i++) {
+        addList(records.getRecords()[i]);
+      }
+    }
+    setMoney();
+
+
+    var text = document.querySelector('#text');
+    var amount = document.querySelector('#amount');
+    var btn = document.querySelector('#btn');
+
+    // var records = [];
+
+
+
+
+    btn.addEventListener('click', function () {
+      // 点击添加按钮 但是要先判断输入的金额是否是数字
+      if (!isAlert()) {
+        errorAlert();
+        return;
+      }
+
+      var data = {
+        detail: text.value,
+        type: amount.value.slice(0, 1),
+        money: amount.value.slice(1)
+      }
+      // console.log(data);
+      // 将数据添加到列表里面 addList()
+      addList(data);
+      records.addData(data);
+
+      // records.push(data);//数据暂时放到数组里面
+      setMoney(); //设置收入支出 资金平衡显示的金额 
+
+      // 设置后 清空文本框内输入文字
+      text.value = '';
+      amount.value = '';
+
+      // 提示信息添加成功
+      successAlert();
+    })
+
+    //输出框内容不合理就提醒用户
+    //加减开头，要么就是纯整数，小数的话小数点在整数后且最多两位
+    //如果输入框内容不合理，就弹窗提醒用户
+    function isAlert() {
+      var reg = /^[\+\-](\d+|\d+\.\d{1,2})$/;
+      if (text.value === "" || reg.test(amount.value) === false) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+
+
+    function addList(data) {
+      var ul = document.querySelector('#list');
+      var li = document.createElement('li');
+      // 如果是+收入 li的右边框为绿色 字体颜色为绿 -有边框为红
+      li.style.borderRight = `solid 5px ${data.type === '+' ? '#40CF7B' : '#C65043'}`;
+      // 插入到ul中
+      var str = `<span class="detail">${data.detail}</span>
+                 <span class="money" 
+                 style="color: ${data.type === '+' ? '#40CF7B' : '#C65043'}">
+                 ${data.type + data.money}
+                 </span>
+                 <span class="del">x</span>`
+
+      li.innerHTML = str;
+      ul.insertBefore(li, ul.children[0]);
+      
+      // 删除部分
+      var del = document.querySelectorAll('.del');
+      for(var i = 0; i < del.length;i++) {
+        del[i].addEventListener('click', function() {
+          // 处理一下删除li时 收入支出余额都会变化 就是 records[i]里面对应的detail删除
+          for(var i = 0; i < records.getRecords().length; i++) {
+            // 跟删除的li的明细一样时 删除数组找那个这个数据
+            if(records.getRecords()[i].detail === this.parentNode.children[0].innerHTML) {
+              records.delData(i);
+            }
+          }
+          // 再统计一下金额
+          setMoney();
+          // 点击x删除ul里面的li
+          ul.removeChild(this.parentNode);
+        })
+      }
+
+    }
+
+    // 统计金额
+    // 首先将数据存储在一个数组里面var records = [];
+    // var records = [];
+    function setMoney() {
+     
+      // 收入
+      var income = document.querySelector('.plus');
+      // 支出
+      var cost = document.querySelector('.minus');
+      // 余额
+      var balance = document.querySelector('#balance');
+
+    
+
+      income.innerHTML = records.income();
+      cost.innerHTML = records.cost();
+      balance.innerHTML = records.income() - records.cost();
+      // 但是此时如果删除li里面的输入支出记录 显示的收入支出资金平衡不变化
+      // 所以要在删除li的时候处理一下
+
+    }
+
+    function errorAlert() {
+      var error = document.querySelector('#error');
+      error.style.height = '30px';
+      setTimeout(function() {
+        error.style.height = '0'
+      }, 800);
+    }
+
+    function successAlert() {
+      var success = document.querySelector('#success');
+      success.style.height = '30px';
+      setTimeout(function() {
+        success.style.height = '0'
+      }, 800);
+    }
+  </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #F7F7F7;
+}
+input:focus {
+  outline: none;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.content h2 {
+  margin: 40px 0 10px 0;
+  font-size: 20px;
+}
+.content .container {
+  position: relative;
+}
+.content .container h1 {
+  margin-bottom: 20px;
+}
+.content .container .inc-exp-container {
+  width: 400px;
+  height: 100px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.content .container .inc-exp-container div {
+  width: 50%;
+  text-align: center;
+}
+.content .container .inc-exp-container div:first-child {
+  border-right: solid 3px #eee;
+}
+.content .container .inc-exp-container div h4 {
+  margin-bottom: 10px;
+}
+.content .container .inc-exp-container div .money {
+  font-size: 20px;
+}
+.content .container .inc-exp-container div .plus {
+  color: #40CF7B;
+}
+.content .container .inc-exp-container div .minus {
+  color: #C65043;
+}
+.content .container h3 {
+  border-bottom: solid 1px #D4D4D4;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+.content .container #list {
+  list-style-type: none;
+}
+.content .container #list li {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  background: #fff;
+  margin: 10px 0;
+  border: 1px solid #eee;
+  position: relative;
+}
+.content .container #list li .detail {
+  flex: 1;
+  text-indent: 10px;
+}
+.content .container #list li .money {
+  margin-left: auto;
+  margin-right: 10px;
+}
+.content .container #list li .del {
+  position: absolute;
+  top: 10px;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center ;
+  color: #fff;
+  background-color: #E74C3C ;
+  cursor: pointer;
+}
+.content .container .form-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.content .container .form-control label {
+  font-weight: 600;
+}
+.content .container .form-control input {
+  width: 100%;
+  height: 40px;
+  margin: 20px 0;
+  text-indent: 8px;
+  font-size: 16px;
+  border: solid 1px #eee;
+}
+.content .container .addTransition {
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+  background-color: #9D88FF;
+  border: none;
+}
+.content .container .alert {
+  position: absolute;
+  top: -75px;
+  left: 0;
+  width: 100%;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  transition: all .5s;
+  overflow: hidden;
+}
+.content .container #error {
+  background-color: #C65043;
+  box-shadow: 0 0 5px #C65043;
+  height: 0;
+}
+.content .container #success {
+  background-color: #40CF7B;
+  box-shadow: 0 0 5px #40CF7B;
+  height: 0;
+}
