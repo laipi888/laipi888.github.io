@@ -1,0 +1,81 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+	margin: 1px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 20px;
+    margin-top: 1px; /* 调整与顶部的间距 */
+}
+
+.plugin-name {
+    font-size: 18px; /* 调小字体 */
+    font-weight: bold;
+}
+
+.bitcoin-price {
+    font-size: 18px;
+}
+
+.chart {
+    margin-top: 30px;
+}
+
+.chart canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+h2 {
+    margin: 0; /* 清除默认的外边距 */
+    text-align: center; /* 标题居中对齐 */
+    font-size: 16px; /* 调小字体 */
+}
+
+#price-container {
+    padding: 20px;
+    margin-top: 2px; /* 调整与顶部的间距 */
+}
+
+#price-chart {
+    height: 80vh !important; /* 调整表格高度 */
+    margin-bottom: 10px; /* 与下方内容保持 10px 间距 */
+}
+
+#logo-container {
+    display: flex;
+    justify-content: left; /* 水平居左 */
+    align-items: center; /* 垂直居中 */
+    margin-top: 2px; /* 调整与顶部的间距 */
+}
+
+/* 图片样式 */
+.logo {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* 标题样式 */
+h2 {
+    margin: 0; /* 清除默认的外边距 */
+}
+
+#logo-container,
+#bitcoin-price {
+    margin-bottom: 20px;
+}
+
+#bitcoin-price,
+#price-chart {
+    margin-bottom: 10px;
+}
+
+#bitcoin-price {
+    font-weight: bold; /* 加粗 */
+    font-size: 20px;
+}
